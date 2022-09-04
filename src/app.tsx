@@ -1,6 +1,6 @@
 import {Route, Router, Routes} from '@solidjs/router';
 import {ErrorBoundary} from 'solid-js';
-import ErrorFallback from '~/components/error-fallback';
+import ErrorFallback from './components/error-fallback';
 import Layout from './components/layout';
 import Landing from './pages/landing';
 import Login from './pages/login';
