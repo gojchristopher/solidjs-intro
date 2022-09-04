@@ -1,7 +1,7 @@
-import {Link, Navigate} from '@solidjs/router';
+import {Link} from '@solidjs/router';
 import {createEffect, createResource, Index, onCleanup, Show, splitProps} from 'solid-js';
 import ChatBubbleOutlineIcon from '~/components/icons/chat-bubble-outline';
-import {authState} from '~/lib/auth';
+import Protected from '~/components/protected';
 import toast from '~/lib/toast';
 import commentService from '~/services/comment';
 import postService from '~/services/post';
@@ -48,24 +48,24 @@ export default function Posts() {
     setFetchingMorePosts(false);
   });
 
-  if (authState().status === 'unauthenticated') return <Navigate href="/login" />;
-
   return (
-    <div>
-      <PostList />
+    <Protected>
+      <div>
+        <PostList />
 
-      <Show when={hasMorePosts()}>
-        <div class="flex justify-center mt-4">
-          <button
-            class="disabled:text-gray-400"
-            disabled={fetchingMorePosts()}
-            onClick={() => setOffset(offset() + 5)}
-          >
-            {fetchingMorePosts() ? 'Loading...' : 'Load more'}
-          </button>
-        </div>
-      </Show>
-    </div>
+        <Show when={hasMorePosts()}>
+          <div class="flex justify-center mt-4">
+            <button
+              class="disabled:text-gray-400"
+              disabled={fetchingMorePosts()}
+              onClick={() => setOffset(offset() + 5)}
+            >
+              {fetchingMorePosts() ? 'Loading...' : 'Load more'}
+            </button>
+          </div>
+        </Show>
+      </div>
+    </Protected>
   );
 }
 
@@ -83,9 +83,7 @@ function PostList() {
 
 function Post(props: {data: TPost}) {
   const [local] = splitProps(props, ['data']);
-
   const postId = local.data.id;
-
   const [comments] = createResource({postId}, commentService.findAll, {initialValue: []});
 
   return (

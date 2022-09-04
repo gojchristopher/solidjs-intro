@@ -43,7 +43,7 @@ function Logout() {
   const handleLogout = () => {
     batch(() => {
       logout();
-      navigate('/login');
+      // navigate('/login');
     });
   };
 
