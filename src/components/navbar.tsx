@@ -12,7 +12,12 @@ export default function Navbar() {
           <h2 class="text-2xl font-semibold">Logo</h2>
         </Link>
 
-        <nav>
+        <nav class="flex gap-3 items-center">
+          <Show when={authState().status === 'authenticated'}>
+            <div>Hello, {authState().user?.name}</div>
+            <Divider />
+          </Show>
+
           <ul>
             <Show when={authState().status === 'authenticated'}>
               <li>
@@ -30,6 +35,10 @@ export default function Navbar() {
       </div>
     </header>
   );
+}
+
+function Divider() {
+  return <div class="rounded-full w-[4px] h-[4px] bg-gray-400" />;
 }
 
 function Logout() {
