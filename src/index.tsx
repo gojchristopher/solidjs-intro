@@ -2,7 +2,7 @@
 import {Router} from '@solidjs/router';
 import {render} from 'solid-js/web';
 import {Toaster} from 'solid-toast';
-import '~/index.css';
+import '~/styles/tailwind.css';
 import App from './app';
 
 render(
