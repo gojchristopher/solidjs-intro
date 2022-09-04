@@ -2,24 +2,26 @@ import {createResource, createSignal} from 'solid-js';
 import {authState} from '~/lib/auth';
 import postService from '~/services/post';
 
-const userId = authState().user?.id;
+const userId = () => authState().user?.id;
 
 const [limit, setLimit] = createSignal(5);
 const [offset, setOffset] = createSignal(0);
 
 const [posts, {mutate: mutatePosts, refetch: refetchPosts}] = createResource(
   {
-    userId,
+    limit: limit(),
     offset: offset(),
-    limit: 5,
+    userId: userId(),
   },
   postService.findAll,
   {initialValue: []},
 );
 
-const [loadingMorePosts, setLoadingMorePosts] = createSignal(false);
+const [hasMorePosts, setHasMorePosts] = createSignal(true);
+const [fetchingMorePosts, setFetchingMorePosts] = createSignal(false);
 
 export {
+  userId,
   limit,
   setLimit,
   offset,
@@ -27,6 +29,8 @@ export {
   posts,
   mutatePosts,
   refetchPosts,
-  loadingMorePosts,
-  setLoadingMorePosts,
+  hasMorePosts,
+  setHasMorePosts,
+  fetchingMorePosts,
+  setFetchingMorePosts,
 };

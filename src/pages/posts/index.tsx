@@ -7,39 +7,45 @@ import commentService from '~/services/comment';
 import postService from '~/services/post';
 import TPost from '~/types/post';
 import {
+  fetchingMorePosts,
+  hasMorePosts,
   limit,
-  loadingMorePosts,
   mutatePosts,
   offset,
   posts,
-  setLoadingMorePosts,
+  setFetchingMorePosts,
+  setHasMorePosts,
   setOffset,
+  userId,
 } from './store';
 
 export default function Posts() {
   createEffect(async function fetchMorePosts() {
-    setLoadingMorePosts(true);
+    setFetchingMorePosts(true);
 
     try {
       const nextPosts = await postService.findAll({
         limit: limit(),
         offset: offset(),
-        userId: authState().user?.id,
+        userId: userId(),
       });
+
+      if (!nextPosts.length) return setHasMorePosts(false);
 
       mutatePosts<TPost[]>((currPosts = []) => [...currPosts, ...nextPosts]);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Something went wrong';
       toast(message, 'danger');
     } finally {
-      setLoadingMorePosts(false);
+      setFetchingMorePosts(false);
     }
   });
 
   onCleanup(() => {
-    setLoadingMorePosts(false);
-    mutatePosts([]);
     setOffset(0);
+    mutatePosts([]);
+    setHasMorePosts(true);
+    setFetchingMorePosts(false);
   });
 
   if (authState().status === 'unauthenticated') return <Navigate href="/login" />;
@@ -48,14 +54,14 @@ export default function Posts() {
     <div>
       <PostList />
 
-      <Show when={posts().length}>
+      <Show when={hasMorePosts()}>
         <div class="flex justify-center mt-4">
           <button
             class="disabled:text-gray-400"
-            disabled={loadingMorePosts()}
+            disabled={fetchingMorePosts()}
             onClick={() => setOffset(offset() + 5)}
           >
-            {loadingMorePosts() ? 'Loading...' : 'Load more'}
+            {fetchingMorePosts() ? 'Loading...' : 'Load more'}
           </button>
         </div>
       </Show>
