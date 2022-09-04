@@ -1,32 +1,27 @@
-import {createEffect, createResource, createSignal, onCleanup} from 'solid-js';
-import {authState} from '~/hooks/use-auth-state';
+import {Link} from '@solidjs/router';
+import {createEffect, createResource, Index, onCleanup, Show, splitProps} from 'solid-js';
+import ChatBubbleOutlineIcon from '~/components/icons/chat-bubble-outline';
 import useToast from '~/hooks/use-toast';
+import commentService from '~/services/comment';
 import postService from '~/services/post';
 import TPost from '~/types/post';
-import PostList from './post-list';
-
-const userId = authState().user?.id;
+import {
+  loadingMorePosts,
+  mutatePosts,
+  offset,
+  posts,
+  setLoadingMorePosts,
+  setOffset,
+  userId,
+} from './store';
 
 export default function Posts() {
   const toast = useToast();
 
-  const [offset, setOffset] = createSignal(0);
-  const [posts, {mutate}] = createResource(
-    {
-      userId,
-      offset: offset(),
-      limit: 5,
-    },
-    postService.findAll,
-    {initialValue: []},
-  );
-
-  const [loading, setLoading] = createSignal(false);
-
-  createEffect(async function fetchMore() {
+  createEffect(async function fetchMorePosts() {
     if (offset() <= 0) return;
 
-    setLoading(true);
+    setLoadingMorePosts(true);
 
     try {
       const nextPosts = await postService.findAll({
@@ -35,34 +30,70 @@ export default function Posts() {
         limit: 5,
       });
 
-      mutate<TPost[]>((currPosts = []) => [...currPosts, ...nextPosts]);
+      mutatePosts<TPost[]>((currPosts = []) => [...currPosts, ...nextPosts]);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Something went wrong';
       toast(message, 'danger');
     } finally {
-      setLoading(false);
+      setLoadingMorePosts(false);
     }
   });
 
   onCleanup(() => {
-    setLoading(false);
+    setLoadingMorePosts(false);
+    mutatePosts([]);
     setOffset(0);
-    mutate([]);
   });
 
   return (
     <div>
-      <PostList data={posts()} />
+      <PostList />
 
-      <div class="flex justify-center mt-4">
-        <button
-          class="disabled:text-gray-400"
-          disabled={loading()}
-          onClick={() => setOffset(offset() + 5)}
-        >
-          {loading() ? 'Loading...' : 'Load more'}
-        </button>
-      </div>
+      <Show when={posts().length}>
+        <div class="flex justify-center mt-4">
+          <button
+            class="disabled:text-gray-400"
+            disabled={loadingMorePosts()}
+            onClick={() => setOffset(offset() + 5)}
+          >
+            {loadingMorePosts() ? 'Loading...' : 'Load more'}
+          </button>
+        </div>
+      </Show>
     </div>
+  );
+}
+
+function PostList() {
+  return (
+    <div class="flex flex-col gap-3 md:gap-4">
+      <Index each={posts()}>
+        {(post) => {
+          return <Post data={post()} />;
+        }}
+      </Index>
+    </div>
+  );
+}
+
+function Post(props: {data: TPost}) {
+  const [local] = splitProps(props, ['data']);
+
+  const postId = local.data.id;
+
+  const [comments] = createResource({postId}, commentService.findAll, {initialValue: []});
+
+  return (
+    <Link href={`/posts/${local.data.id}`} class="block p-4 rounded-md border border-gray-300">
+      <h2 class="text-xl">{local.data.title}</h2>
+      <p class="mt-1 text-sm line-clamp-2 text-gray-600">{local.data.body}</p>
+
+      <div class="mt-2 flex gap-4">
+        <span class="flex gap-2 items-center">
+          <ChatBubbleOutlineIcon class="w-4 h-4" />
+          <span class="text-sm">{comments().length}</span>
+        </span>
+      </div>
+    </Link>
   );
 }
