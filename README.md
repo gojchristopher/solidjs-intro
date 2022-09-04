@@ -9,7 +9,7 @@ Introduction to **SolidJS** framework
 - [x] `createResource`
 - [x] ~~`createStore`~~
 - [x] ~~`createMutable`~~
-- [ ] `createMemo`
+- [x] `createMemo`
 - [ ] `useTransition`
 
 - [ ] **inbuilt components**
@@ -33,3 +33,6 @@ Introduction to **SolidJS** framework
 
   - [ ] `mergeProps`
   - [x] `splitProps`
+
+- [ ] **others**
+  - [ ] `batch`
