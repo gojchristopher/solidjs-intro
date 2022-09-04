@@ -1,6 +1,6 @@
 import {Link, useLocation, useNavigate} from '@solidjs/router';
 import {batch, Show} from 'solid-js';
-import {authState, setAuthState} from '~/hooks/use-auth-state';
+import {authState, logout} from '~/lib/auth';
 
 export default function Navbar() {
   const location = useLocation();
@@ -14,13 +14,13 @@ export default function Navbar() {
 
         <nav>
           <ul>
-            <Show when={authState().loggedIn}>
+            <Show when={authState().status === 'authenticated'}>
               <li>
                 <Logout />
               </li>
             </Show>
 
-            <Show when={!authState().loggedIn && location.pathname === '/'}>
+            <Show when={authState().status === 'unauthenticated' && location.pathname === '/'}>
               <li>
                 <Link href="/login">Login</Link>
               </li>
@@ -37,11 +37,7 @@ function Logout() {
 
   const handleLogout = () => {
     batch(() => {
-      setAuthState({
-        user: null,
-        loggedIn: false,
-      });
-
+      logout();
       navigate('/login');
     });
   };

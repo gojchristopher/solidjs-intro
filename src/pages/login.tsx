@@ -3,15 +3,14 @@ import axios from 'axios';
 import {batch, createSignal} from 'solid-js';
 import Button from '~/components/button';
 import Input from '~/components/input';
-import {setAuthState} from '~/hooks/use-auth-state';
-import useToast from '~/hooks/use-toast';
+import {login} from '~/lib/auth';
+import toast from '~/lib/toast';
 import TUser from '~/types/user';
 
 const prefix = import.meta.env.VITE_API_URL;
 
 export default function Login() {
   const navigate = useNavigate();
-  const toast = useToast();
 
   const [email, setEmail] = createSignal('');
   const [pending, setPending] = createSignal(false);
@@ -28,11 +27,8 @@ export default function Login() {
       if (!user) throw new Error('User does not exist');
 
       batch(() => {
+        login(user);
         navigate('/posts');
-        setAuthState({
-          user,
-          loggedIn: true,
-        });
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Something went wrong';

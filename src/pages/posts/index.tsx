@@ -1,33 +1,30 @@
-import {Link} from '@solidjs/router';
+import {Link, Navigate} from '@solidjs/router';
 import {createEffect, createResource, Index, onCleanup, Show, splitProps} from 'solid-js';
 import ChatBubbleOutlineIcon from '~/components/icons/chat-bubble-outline';
-import useToast from '~/hooks/use-toast';
+import {authState} from '~/lib/auth';
+import toast from '~/lib/toast';
 import commentService from '~/services/comment';
 import postService from '~/services/post';
 import TPost from '~/types/post';
 import {
+  limit,
   loadingMorePosts,
   mutatePosts,
   offset,
   posts,
   setLoadingMorePosts,
   setOffset,
-  userId,
 } from './store';
 
 export default function Posts() {
-  const toast = useToast();
-
   createEffect(async function fetchMorePosts() {
-    if (offset() <= 0) return;
-
     setLoadingMorePosts(true);
 
     try {
       const nextPosts = await postService.findAll({
-        userId,
+        limit: limit(),
         offset: offset(),
-        limit: 5,
+        userId: authState().user?.id,
       });
 
       mutatePosts<TPost[]>((currPosts = []) => [...currPosts, ...nextPosts]);
@@ -44,6 +41,8 @@ export default function Posts() {
     mutatePosts([]);
     setOffset(0);
   });
+
+  if (authState().status === 'unauthenticated') return <Navigate href="/login" />;
 
   return (
     <div>

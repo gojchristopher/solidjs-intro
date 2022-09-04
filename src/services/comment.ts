@@ -1,5 +1,5 @@
 import axios from 'axios';
-import constants from '~/config/constants';
+import constants from '~/lib/constants';
 import TComment from '~/types/comment';
 
 type FindAllQuery = {
