@@ -6,21 +6,19 @@ Introduction to **SolidJS** framework
 
 - [x] `createSignal`
 - [x] `createEffect`
-- [x] `createResource`
-- [x] ~~`createStore`~~
-- [x] ~~`createMutable`~~
+- [ ] `createResource`
+- [ ] `createStore`
+- [ ] `createMutable`
 - [x] `createMemo`
 - [ ] `useTransition`
 
 - [ ] **inbuilt components**
 
-  - [x] `Show`
   - [ ] `For`
-  - [ ] `Index`
-  - [ ] `Switch`
-  - [ ] `Dynamic`
-  - [ ] `Portal`
+  - [x] `Show`
+  - [ ] `Switch/Match`
   - [x] `ErrorBoundary`
+  - [ ] `Suspense`
 
 - [x] `onMount`
 - [x] `onCleanup`
