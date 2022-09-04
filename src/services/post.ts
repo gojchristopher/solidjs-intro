@@ -21,8 +21,24 @@ async function findAll(params?: Partial<FindAllQuery>) {
   return data;
 }
 
+async function find(postId: number) {
+  const {data} = await axios.get<TPost>(`/posts/${postId}`, {
+    baseURL: constants.apiBaseUrl,
+  });
+
+  return data;
+}
+
+async function remove(postId: number) {
+  await axios.delete(`/posts/${postId}`, {
+    baseURL: constants.apiBaseUrl,
+  });
+}
+
 const postService = {
+  find,
   findAll,
+  remove,
 };
 
 export default postService;
