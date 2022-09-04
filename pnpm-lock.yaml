@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@solidjs/router': ^0.4.3
+  '@tailwindcss/line-clamp': ^0.4.2
   '@types/node': ^18.7.14
   autoprefixer: ^10.4.8
   axios: ^0.27.2
@@ -24,6 +25,7 @@ dependencies:
   tiny-invariant: 1.2.0
 
 devDependencies:
+  '@tailwindcss/line-clamp': 0.4.2_tailwindcss@3.1.8
   '@types/node': 18.7.14
   autoprefixer: 10.4.8_postcss@8.4.16
   postcss: 8.4.16
@@ -418,6 +420,14 @@ packages:
     dependencies:
       solid-js: 1.5.1
     dev: false
+
+  /@tailwindcss/line-clamp/0.4.2_tailwindcss@3.1.8:
+    resolution: {integrity: sha512-HFzAQuqYCjyy/SX9sLGB1lroPzmcnWv1FHkIpmypte10hptf4oPUfucryMKovZh2u0uiS9U5Ty3GghWfEJGwVw==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.1.8_postcss@8.4.16
+    dev: true
 
   /@types/node/18.7.14:
     resolution: {integrity: sha512-6bbDaETVi8oyIARulOE9qF1/Qdi/23z6emrUh0fNJRUmjznqrixD4MpGDdgOFk5Xb0m2H6Xu42JGdvAxaJR/wA==}
