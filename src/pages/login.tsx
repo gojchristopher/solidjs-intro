@@ -1,9 +1,9 @@
-import {useNavigate} from '@solidjs/router';
+import {Navigate, useNavigate} from '@solidjs/router';
 import axios from 'axios';
 import {batch, createSignal} from 'solid-js';
 import Button from '~/components/button';
 import Input from '~/components/input';
-import {login} from '~/lib/auth';
+import {authState, login} from '~/lib/auth';
 import toast from '~/lib/toast';
 import TUser from '~/types/user';
 
@@ -37,6 +37,8 @@ export default function Login() {
       setPending(false);
     }
   };
+
+  if (authState().status === 'authenticated') return <Navigate href="/posts" />;
 
   return (
     <div class="w-[350px] max-w-full mx-auto py-16">
