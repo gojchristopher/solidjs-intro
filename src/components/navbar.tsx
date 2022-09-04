@@ -1,13 +1,13 @@
 import {Link, useLocation, useNavigate} from '@solidjs/router';
-import {batch, Show} from 'solid-js';
+import {batch, ParentProps, Show} from 'solid-js';
 import {authState, logout} from '~/lib/auth';
 
 export default function Navbar() {
   const location = useLocation();
 
   return (
-    <header class="border-b border-gray-300">
-      <div class="px-4 md:px-6 lg:px-8 py-4 max-w-[1100px] mx-auto flex items-center justify-between">
+    <Container>
+      <InnerWrapper>
         <Link href="/">
           <h2 class="text-2xl font-semibold">Logo</h2>
         </Link>
@@ -32,13 +32,9 @@ export default function Navbar() {
             </Show>
           </ul>
         </nav>
-      </div>
-    </header>
+      </InnerWrapper>
+    </Container>
   );
-}
-
-function Divider() {
-  return <div class="rounded-full w-[4px] h-[4px] bg-gray-400" />;
 }
 
 function Logout() {
@@ -52,4 +48,20 @@ function Logout() {
   };
 
   return <button onClick={handleLogout}>Logout</button>;
+}
+
+function Divider() {
+  return <span class="rounded-full w-[4px] h-[4px] bg-gray-400" />;
+}
+
+function InnerWrapper({children}: ParentProps) {
+  return (
+    <div class="px-4 md:px-6 lg:px-8 py-4 max-w-[1100px] mx-auto flex items-center justify-between">
+      {children}
+    </div>
+  );
+}
+
+function Container({children}: ParentProps) {
+  return <header class="border-b border-gray-300">{children}</header>;
 }
