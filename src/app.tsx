@@ -10,11 +10,11 @@ import Posts from './pages/posts';
 
 export default function App() {
   return (
-    <ErrorBoundary fallback={ErrorFallback}>
-      <Router>
+    <Router>
+      <ErrorBoundary fallback={ErrorFallback}>
         <Navbar />
 
-        <main class="max-w-[900px] mx-auto p-16">
+        <main class="max-w-[600px] mx-auto p-4 md:p-8 lg:p-12">
           <Routes>
             <Route path="/" component={Landing} />
             <Route path="/login" component={Login} />
@@ -24,7 +24,7 @@ export default function App() {
 
           <Toaster />
         </main>
-      </Router>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Router>
   );
 }
