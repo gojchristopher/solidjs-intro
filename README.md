@@ -7,7 +7,8 @@ Introduction to **SolidJS** framework
 - [x] `createSignal`
 - [x] `createEffect`
 - [x] `createResource`
-- [ ] `createStore`
+- [x] ~~`createStore`~~
+- [x] ~~`createMutable`~~
 - [ ] `createMemo`
 - [ ] `useTransition`
 
