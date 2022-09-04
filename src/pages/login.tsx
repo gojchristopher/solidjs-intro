@@ -50,7 +50,7 @@ export default function Login() {
           type="email"
           placeholder="Email"
           value={email()}
-          onChange={(e) => {
+          onKeyUp={(e) => {
             setEmail(e.currentTarget.value);
           }}
         />
