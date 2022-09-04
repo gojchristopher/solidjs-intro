@@ -1,4 +1,5 @@
-import {ComponentProps, splitProps} from 'solid-js';
+import type {ComponentProps} from 'solid-js';
+import {splitProps} from 'solid-js';
 
 export default function Button(props: ComponentProps<'button'>) {
   const [local, others] = splitProps(props, ['disabled', 'children']);

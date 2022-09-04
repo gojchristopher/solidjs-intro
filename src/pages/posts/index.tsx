@@ -1,12 +1,20 @@
 import {Link} from '@solidjs/router';
-import {createEffect, createResource, createSignal, Index, Show, splitProps} from 'solid-js';
+import {
+  createEffect,
+  createResource,
+  createSignal,
+  Index,
+  onCleanup,
+  Show,
+  splitProps,
+} from 'solid-js';
 import ChatBubbleOutlineIcon from '~/components/icons/chat-bubble-outline';
 import CloseSolidIcon from '~/components/icons/close-icon-solid';
 import Protected from '~/components/protected';
 import toast from '~/lib/toast';
 import commentService from '~/services/comment';
 import postService from '~/services/post';
-import TPost from '~/types/post';
+import type TPost from '~/types/post';
 import {
   fetchingMorePosts,
   hasMorePosts,
@@ -14,14 +22,18 @@ import {
   mutatePosts,
   offset,
   posts,
+  refetchPosts,
   setFetchingMorePosts,
   setHasMorePosts,
+  setLimit,
   setOffset,
   userId,
 } from './store';
 
 export default function Posts() {
   createEffect(async function fetchMorePosts() {
+    if (offset() === 0) return;
+
     setFetchingMorePosts(true);
 
     try {
@@ -40,6 +52,14 @@ export default function Posts() {
     } finally {
       setFetchingMorePosts(false);
     }
+  });
+
+  onCleanup(() => {
+    refetchPosts();
+    setFetchingMorePosts(false);
+    setHasMorePosts(true);
+    setOffset(0);
+    setLimit(5);
   });
 
   return (

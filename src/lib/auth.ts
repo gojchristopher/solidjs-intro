@@ -1,5 +1,5 @@
 import {createSignal} from 'solid-js';
-import TUser from '~/types/user';
+import type TUser from '~/types/user';
 
 type AuthState =
   | {user?: null; status: 'unauthenticated'}

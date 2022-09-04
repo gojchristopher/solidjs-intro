@@ -1,5 +1,6 @@
 import {Link, useLocation, useNavigate} from '@solidjs/router';
-import {batch, ParentProps, Show} from 'solid-js';
+import type {ParentProps} from 'solid-js';
+import {batch, Show} from 'solid-js';
 import {authState, logout} from '~/lib/auth';
 
 export default function Navbar() {
@@ -43,7 +44,7 @@ function Logout() {
   const handleLogout = () => {
     batch(() => {
       logout();
-      // navigate('/login');
+      navigate('/login');
     });
   };
 

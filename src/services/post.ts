@@ -1,6 +1,6 @@
 import axios from 'axios';
 import constants from '~/lib/constants';
-import TPost from '~/types/post';
+import type TPost from '~/types/post';
 
 type FindAllQuery = {
   limit: number;

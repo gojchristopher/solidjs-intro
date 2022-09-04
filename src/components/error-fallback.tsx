@@ -1,9 +1,7 @@
 import {Link} from '@solidjs/router';
 import ArrowLeftSolidIcon from './icons/arrow-left-solid';
 
-export default function ErrorFallback(exception: Error) {
-  console.error(exception);
-
+export default function ErrorFallback() {
   return (
     <div class="min-h-screen flex flex-col items-center justify-center">
       <h2 class="text-6xl font-bold">Error 503</h2>

@@ -5,7 +5,7 @@ import Button from '~/components/button';
 import Input from '~/components/input';
 import {authState, login} from '~/lib/auth';
 import toast from '~/lib/toast';
-import TUser from '~/types/user';
+import type TUser from '~/types/user';
 
 const prefix = import.meta.env.VITE_API_URL;
 
