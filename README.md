@@ -4,31 +4,31 @@ Introduction to **SolidJS** framework
 
 ## Usage
 
-- [ ] `createSignal`
-- [ ] `createEffect`
-- [ ] `createResource`
+- [x] `createSignal`
+- [x] `createEffect`
+- [x] `createResource`
 - [ ] `createStore`
 - [ ] `createMemo`
 - [ ] `useTransition`
 
 - [ ] **inbuilt components**
 
-  - [ ] `Show`
+  - [x] `Show`
   - [ ] `For`
   - [ ] `Index`
   - [ ] `Switch`
   - [ ] `Dynamic`
   - [ ] `Portal`
-  - [ ] `ErrorBoundary`
+  - [x] `ErrorBoundary`
 
-- [ ] `onMount`
-- [ ] `onCleanup`
+- [x] `onMount`
+- [x] `onCleanup`
 
-- [ ] **styling**
+- [x] **styling**
 
-  - [ ] `classList`
+  - [x] `classList`
 
 - [ ] **props helpers**
 
   - [ ] `mergeProps`
-  - [ ] `splitProps`
+  - [x] `splitProps`
