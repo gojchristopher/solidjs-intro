@@ -11,6 +11,7 @@ specifiers:
   solid-js: ^1.5.1
   solid-toast: ^0.3.4
   tailwindcss: ^3.1.8
+  tiny-invariant: ^1.2.0
   typescript: ^4.8.2
   vite: ^3.0.9
   vite-plugin-solid: ^2.3.0
@@ -20,6 +21,7 @@ dependencies:
   axios: 0.27.2
   solid-js: 1.5.1
   solid-toast: 0.3.4_solid-js@1.5.1
+  tiny-invariant: 1.2.0
 
 devDependencies:
   '@types/node': 18.7.14
@@ -1338,6 +1340,10 @@ packages:
     transitivePeerDependencies:
       - ts-node
     dev: true
+
+  /tiny-invariant/1.2.0:
+    resolution: {integrity: sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==}
+    dev: false
 
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
