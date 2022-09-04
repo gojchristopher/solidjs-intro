@@ -36,11 +36,4 @@ module.exports = {
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/prefer-nullish-coalescing': 'error',
   },
-  ignorePatterns: [
-    '.eslintrc.js',
-    'next.config.js',
-    'tailwind.config.js',
-    'postcss.config.js',
-    'dist',
-  ],
 };
