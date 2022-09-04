@@ -1,28 +1,28 @@
 import axios from 'axios';
 import constants from '~/config/constants';
-import TPost from '~/types/post';
+import TComment from '~/types/comment';
 
 type FindAllQuery = {
   limit: number;
   offset: number;
-  userId: number;
+  postId: number;
 };
 
 async function findAll(params?: Partial<FindAllQuery>) {
-  const {data} = await axios.get<TPost[]>('/posts', {
+  const {data} = await axios.get<TComment[]>('/comments', {
     baseURL: constants.apiBaseUrl,
     params: {
       _start: params?.offset ?? 0,
       _limit: params?.limit ?? 10,
-      userId: params?.userId,
+      postId: params?.postId,
     },
   });
 
   return data;
 }
 
-const postService = {
+const commentService = {
   findAll,
 };
 
-export default postService;
+export default commentService;
