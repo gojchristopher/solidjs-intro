@@ -32,14 +32,15 @@ export default function Login() {
         loggedIn: true,
       });
     } catch (error) {
-      toast(error instanceof Error ? error.message : 'Something went wrong');
+      const message = error instanceof Error ? error.message : 'Something went wrong';
+      toast(message, 'danger');
     } finally {
       setPending(false);
     }
   };
 
   return (
-    <div class="w-[350px] max-w-full mx-auto">
+    <div class="w-[350px] max-w-full mx-auto py-16">
       <div class="mb-8">
         <h1 class="font-medium text-4xl">Login</h1>
         <p>Please login to continue</p>
@@ -49,11 +50,10 @@ export default function Login() {
         <Input
           type="email"
           placeholder="Email"
+          value={email()}
           onChange={(e) => {
-            console.log(e.currentTarget.value);
             setEmail(e.currentTarget.value);
           }}
-          value={email()}
         />
 
         <Button type="submit" disabled={pending()}>
