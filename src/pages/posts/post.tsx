@@ -1,3 +1,4 @@
+import {Link} from '@solidjs/router';
 import {createResource, splitProps} from 'solid-js';
 import ChatBubbleOutlineIcon from '~/components/icons/chat-bubble-outline';
 import commentService from '~/services/comment';
@@ -16,9 +17,9 @@ export default function Post(props: {data: TPost}) {
   );
 
   return (
-    <div class="p-4 border border-gray-300 rounded-md">
+    <Link href={`/posts/${local.data.id}`} class="block p-4 rounded-md border border-gray-300">
       <h2 class="text-xl">{local.data.title}</h2>
-      <p class="mt-1 text-sm">{local.data.body}</p>
+      <p class="mt-1 text-sm line-clamp-2 text-gray-600">{local.data.body}</p>
 
       <div class="mt-2 flex gap-4">
         <span class="flex gap-2 items-center">
@@ -26,6 +27,6 @@ export default function Post(props: {data: TPost}) {
           <span class="text-sm">{comments().length}</span>
         </span>
       </div>
-    </div>
+    </Link>
   );
 }
