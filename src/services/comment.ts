@@ -12,8 +12,8 @@ async function findAll(params?: Partial<FindAllQuery>) {
   const {data} = await axios.get<TComment[]>('/comments', {
     baseURL: constants.apiBaseUrl,
     params: {
-      _start: params?.offset ?? 0,
-      _limit: params?.limit ?? 10,
+      _limit: params?.limit,
+      _start: params?.offset,
       postId: params?.postId,
     },
   });
