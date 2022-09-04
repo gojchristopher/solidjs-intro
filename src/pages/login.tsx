@@ -1,6 +1,6 @@
 import {useNavigate} from '@solidjs/router';
 import axios from 'axios';
-import {createSignal} from 'solid-js';
+import {batch, createSignal} from 'solid-js';
 import Button from '~/components/button';
 import Input from '~/components/input';
 import {setAuthState} from '~/hooks/use-auth-state';
@@ -23,13 +23,16 @@ export default function Login() {
 
     try {
       const {data} = await axios.get<TUser[]>(`${prefix}/users?email=${email()}`);
+      const user = data.at(0);
 
-      if (data.length <= 0) throw new Error('User does not exist');
+      if (!user) throw new Error('User does not exist');
 
-      navigate('/posts');
-      setAuthState({
-        user: data[0],
-        loggedIn: true,
+      batch(() => {
+        navigate('/posts');
+        setAuthState({
+          user,
+          loggedIn: true,
+        });
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Something went wrong';
